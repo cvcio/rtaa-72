@@ -1,0 +1,33 @@
+FROM golang:1.18.1-alpine3.15
+ARG version
+
+# Install certificates and git
+RUN apk add --update --no-cache ca-certificates git
+
+# Create and use a directory where our project will be build
+RUN mkdir -p /go/src/github.com/cvcio/rtaa-72/
+WORKDIR /go/src/github.com/cvcio/rtaa-72/
+
+# COPY go.mod and go.sum files to the workspace
+COPY go.mod /go/src/github.com/cvcio/rtaa-72/
+COPY go.sum /go/src/github.com/cvcio/rtaa-72/
+
+# Get dependancies - will also be cached if we won't change mod/sum
+#RUN go mod vendor
+
+# COPY the source code
+COPY cmd/stream/ /go/src/github.com/cvcio/rtaa-72/cmd/stream/
+COPY internal/ /go/src/github.com/cvcio/rtaa-72/internal/
+COPY models/ /go/src/github.com/cvcio/rtaa-72/models/
+COPY pkg/ /go/src/github.com/cvcio/rtaa-72/pkg/
+COPY proto/ /go/src/github.com/cvcio/rtaa-72/proto/
+
+WORKDIR /go/src/github.com/cvcio/rtaa-72/cmd/stream/
+RUN GO111MODULE=on go mod vendor
+RUN GO111MODULE=on GOFLAGS=-mod=vendor CGO_ENABLED=0 GOOS=linux go build -v -ldflags "-X github.com/cvcio/rtaa-72/cmd/stream/main.version=$version" -a -installsuffix cgo -o stream .
+
+FROM alpine:3.15
+RUN apk --no-cache add ca-certificates
+WORKDIR /svc/
+COPY --from=0 /go/src/github.com/cvcio/rtaa-72/cmd/stream .
+ENTRYPOINT ["/svc/stream"]

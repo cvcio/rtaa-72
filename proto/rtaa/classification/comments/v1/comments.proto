@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package proto.rtaa.classification.comments.v1;
+
+// third-party imports
+import "google/api/annotations.proto";
+
+// rtaa-72 imports
+import "proto/rtaa/classification/common/v1/meta.proto";
+import "proto/rtaa/classification/common/v1/predictions.proto";
+
+message Comment {
+    string text = 1;
+    proto.rtaa.classification.common.v1.Meta meta = 2;
+}
+
+message CommentList {
+    repeated Comment comments = 1;
+}
+
+message ResponseToxic {
+    repeated proto.rtaa.classification.common.v1.Prediction predictions = 1;
+    proto.rtaa.classification.common.v1.Meta meta = 2;
+}
+
+message ResponseToxicList {
+    repeated ResponseToxic comments = 1;
+}
+
+service CommentService {
+    rpc ClassifyToxic (Comment) returns (ResponseToxic) {
+        option (google.api.http) = {
+            post : "/v3/classify/comment/toxicity"
+            body : "*"
+        };
+    };
+    rpc ClassifyToxicList (CommentList) returns (ResponseToxicList) {
+        option (google.api.http) = {
+            post : "/v3/classify/comments/toxicity"
+            body : "*"
+        };
+    };
+};

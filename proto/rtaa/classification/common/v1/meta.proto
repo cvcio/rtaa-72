@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package proto.rtaa.classification.common.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Meta message holds metadata for any user request (comments or accounts classification)
+// Use @ threshold to adjust the probability boundary (default 0.5)
+// Use @ version to choose the version of the classifier (accepts v1, v2, default v1)
+message Meta {
+    string id = 1;
+    string source = 2;
+    string screen_name = 3;
+    google.protobuf.Timestamp comment_created_at = 4;
+    google.protobuf.Timestamp user_created_at = 5;
+    google.protobuf.Timestamp classified_at = 6;
+    string link = 7;
+    string lang = 8;
+    double threshold = 9;
+    string version = 10;
+}

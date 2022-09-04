@@ -1,0 +1,20 @@
+version: '3.2'
+
+services:  
+  classifier:
+    image: cvcio/rtaa-72-rtaa-classifier:latest
+    network_mode: "host"
+  streamer:
+    image: cvcio/rtaa-72-stream:latest
+    network_mode: "host"
+    environment:
+      - LOG_LEVEL=DEBUG
+      - TWITTER_CONSUMER_KEY=XXX
+      - TWITTER_CONSUMER_SECRET=XXX
+  application:
+    image: cvcio/rtaa-72-app:latest
+    environment:
+    - VUE_APP_TITLE=RTAA-72
+    - VUE_APP_GRPC=http://localhost:8000
+    - NODE_ENV=development
+    network_mode: "host"

@@ -1,0 +1,1030 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/rtaa/classification/common/v1/meta.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AccountService"
+    },
+    {
+      "name": "CommentService"
+    },
+    {
+      "name": "TwitterWatchService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/classify/account/twitter": {
+      "post": {
+        "summary": "ClassifyTwitterAccount classifies a single TwitterAccount\nreturns a ResponseAccount message",
+        "operationId": "AccountService_ClassifyTwitterAccount",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResponseAccount"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TwitterAccount"
+            }
+          }
+        ],
+        "tags": [
+          "AccountService"
+        ]
+      }
+    },
+    "/v1/classify/accounts/twitter": {
+      "post": {
+        "summary": "ClassifyTwitterAccount classifies a list of TwitterAccount messages (TwitterAccountList)\nreturns a list of ResponseAccount messages (ResponseAccountList)",
+        "operationId": "AccountService_ClassifyTwitterAccounts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResponseAccountList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TwitterAccountList"
+            }
+          }
+        ],
+        "tags": [
+          "AccountService"
+        ]
+      }
+    },
+    "/v3/classify/comment/toxicity": {
+      "post": {
+        "operationId": "CommentService_ClassifyToxic",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResponseToxic"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Comment"
+            }
+          }
+        ],
+        "tags": [
+          "CommentService"
+        ]
+      }
+    },
+    "/v3/classify/comments/toxicity": {
+      "post": {
+        "operationId": "CommentService_ClassifyToxicList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ResponseToxicList"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CommentList"
+            }
+          }
+        ],
+        "tags": [
+          "CommentService"
+        ]
+      }
+    },
+    "/v3/twitter/authorize": {
+      "post": {
+        "summary": "Autorize implements twitter's oauth2 authorization\nread more: https://developer.twitter.com/en/docs/authentication/oauth-2-0",
+        "operationId": "TwitterWatchService_Authorize",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AuthResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AuthorizeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/connect": {
+      "post": {
+        "summary": "Connect establish a connection with the service",
+        "operationId": "TwitterWatchService_Connect",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConnectResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ConnectRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/disconnect": {
+      "post": {
+        "summary": "Disconnect establish a connection with the service",
+        "operationId": "TwitterWatchService_Disconnect",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConnectResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ConnectRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/twitter/obb": {
+      "post": {
+        "summary": "Obb implements twitter's pin-based oath 1.0a authorization\nread more: https://developer.twitter.com/en/docs/authentication/oauth-1-0a/pin-based-oauth",
+        "operationId": "TwitterWatchService_Obb",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ObbResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Empty"
+            }
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/twitter/rules": {
+      "get": {
+        "summary": "GetRules returns all rules stored on twitter streaming api",
+        "operationId": "TwitterWatchService_GetRules",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RulesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      },
+      "delete": {
+        "summary": "DeleteRules deletes all rules",
+        "operationId": "TwitterWatchService_DeleteRules",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RulesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RulesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      },
+      "post": {
+        "summary": "Addrules adds a new rule to twitter streaming api",
+        "operationId": "TwitterWatchService_AddRules",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RulesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RulesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/twitter/rules/delete/{id}": {
+      "delete": {
+        "summary": "DeleteRule deletes a specific rule",
+        "operationId": "TwitterWatchService_DeleteRule",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RulesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/twitter/rules/{id}": {
+      "get": {
+        "summary": "GetRule by id, specific to user id",
+        "operationId": "TwitterWatchService_GetRule",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RulesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/twitter/stream/{id}": {
+      "get": {
+        "summary": "Stream data from twitter api",
+        "operationId": "TwitterWatchService_Stream",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/v1StreamResponse"
+                },
+                "error": {
+                  "$ref": "#/definitions/rpcStatus"
+                }
+              },
+              "title": "Stream result of v1StreamResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    },
+    "/v3/twitterwatch/twitter/verify": {
+      "post": {
+        "summary": "Verify twitter's authorization",
+        "operationId": "TwitterWatchService_Verify",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AuthResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1VerifyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TwitterWatchService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Account": {
+      "type": "object",
+      "properties": {
+        "followers": {
+          "type": "string",
+          "format": "int64"
+        },
+        "following": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tweets": {
+          "type": "string",
+          "format": "int64"
+        },
+        "favorites": {
+          "type": "string",
+          "format": "int64"
+        },
+        "listed": {
+          "type": "string",
+          "format": "int64"
+        },
+        "defaultProfile": {
+          "type": "boolean"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "profileImageUrl": {
+          "type": "string"
+        },
+        "profileBannerUrl": {
+          "type": "string"
+        },
+        "srource": {
+          "type": "string"
+        },
+        "prediction": {
+          "$ref": "#/definitions/v1Prediction"
+        }
+      },
+      "title": "Account"
+    },
+    "v1Article": {
+      "type": "object"
+    },
+    "v1AuthResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "oauthToken": {
+          "type": "string"
+        },
+        "oauthTokenSecret": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "profileImageUrlHttps": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "v1AuthorizeRequest": {
+      "type": "object",
+      "title": "Autorization Related"
+    },
+    "v1Comment": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "meta": {
+          "$ref": "#/definitions/v1Meta"
+        }
+      }
+    },
+    "v1CommentList": {
+      "type": "object",
+      "properties": {
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Comment"
+          }
+        }
+      }
+    },
+    "v1ConnectRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "track": {
+          "type": "string"
+        },
+        "follow": {
+          "type": "string"
+        },
+        "oauthToken": {
+          "type": "string"
+        },
+        "oauthTokenSecret": {
+          "type": "string"
+        },
+        "classificationServiceActive": {
+          "type": "boolean"
+        },
+        "classificationServiceClassifyAccounts": {
+          "type": "boolean"
+        },
+        "classificationServiceClassifyTweets": {
+          "type": "boolean"
+        },
+        "classificationServiceClassifyMedia": {
+          "type": "boolean"
+        },
+        "classificationServiceClassifyNews": {
+          "type": "boolean"
+        },
+        "classificationServiceHost": {
+          "type": "string"
+        },
+        "gephiServiceActive": {
+          "type": "boolean"
+        },
+        "gephiServiceHost": {
+          "type": "string"
+        },
+        "gephiServiceWorkspace": {
+          "type": "string"
+        }
+      },
+      "title": "Stream Related"
+    },
+    "v1ConnectResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Empty": {
+      "type": "object"
+    },
+    "v1Media": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "mediaUrlHttps": {
+          "type": "string"
+        },
+        "displayUrl": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Meta": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "screenName": {
+          "type": "string"
+        },
+        "commentCreatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "userCreatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "classifiedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "link": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "double"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "title": "Meta message holds metadata for any user request (comments or accounts classification)\nUse @ threshold to adjust the probability boundary (default 0.5)\nUse @ version to choose the version of the classifier (accepts v1, v2, default v1)"
+    },
+    "v1ObbResponse": {
+      "type": "object",
+      "properties": {
+        "requestToken": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Prediction": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number",
+          "format": "float"
+        },
+        "prediction": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1Relationship": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "title": "Relationship"
+    },
+    "v1ResponseAccount": {
+      "type": "object",
+      "properties": {
+        "predictions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Prediction"
+          }
+        }
+      },
+      "title": "ResponseAccount"
+    },
+    "v1ResponseAccountList": {
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ResponseAccount"
+          }
+        }
+      },
+      "title": "ResponseAccountList, a list of ResponseAccount messages {accounts: [...]}"
+    },
+    "v1ResponseToxic": {
+      "type": "object",
+      "properties": {
+        "predictions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Prediction"
+          }
+        },
+        "meta": {
+          "$ref": "#/definitions/v1Meta"
+        }
+      }
+    },
+    "v1ResponseToxicList": {
+      "type": "object",
+      "properties": {
+        "comments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ResponseToxic"
+          }
+        }
+      }
+    },
+    "v1RulesRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "v1RulesResponse": {
+      "type": "object"
+    },
+    "v1StreamResponse": {
+      "type": "object",
+      "properties": {
+        "tweets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Tweet"
+          }
+        },
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Account"
+          }
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Media"
+          }
+        },
+        "articles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Article"
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Relationship"
+          }
+        }
+      },
+      "title": "StreamResponse"
+    },
+    "v1Tweet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "typeOf": {
+          "type": "string"
+        },
+        "retweets": {
+          "type": "string",
+          "format": "int64"
+        },
+        "favorites": {
+          "type": "string",
+          "format": "int64"
+        },
+        "source": {
+          "type": "string"
+        },
+        "hashtags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "lang": {
+          "type": "string"
+        },
+        "prediction": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Prediction"
+          }
+        }
+      },
+      "title": "Tweet"
+    },
+    "v1TwitterAccount": {
+      "type": "object",
+      "properties": {
+        "followers": {
+          "type": "string",
+          "format": "int64"
+        },
+        "following": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tweets": {
+          "type": "string",
+          "format": "int64"
+        },
+        "favorites": {
+          "type": "string",
+          "format": "int64"
+        },
+        "listed": {
+          "type": "string",
+          "format": "int64"
+        },
+        "defaultProfile": {
+          "type": "boolean"
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "meta": {
+          "$ref": "#/definitions/v1Meta"
+        }
+      }
+    },
+    "v1TwitterAccountList": {
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1TwitterAccount"
+          }
+        }
+      },
+      "title": "TwitterAccountList, a list of TwitterAccount messages {accounts: [...]}"
+    },
+    "v1VerifyRequest": {
+      "type": "object",
+      "properties": {
+        "requestToken": {
+          "type": "string"
+        },
+        "oauthVerifier": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

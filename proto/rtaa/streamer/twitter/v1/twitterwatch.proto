@@ -1,0 +1,224 @@
+syntax = "proto3";
+
+package proto.rtaa.streamer.twitter.v1;
+
+// third-party imports
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// rtaa-72 imports
+import "proto/rtaa/classification/common/v1/predictions.proto";
+
+// Tweet
+message Tweet {
+    string id = 1;
+    string text = 2;
+    string type_of = 3;
+    int64 retweets = 4;
+    int64 favorites = 5;
+    string source = 6;
+    repeated string hashtags = 7;
+    google.protobuf.Timestamp created_at = 8;
+    string user_name = 9;
+    string author = 10;
+    string lang = 11;
+
+    repeated proto.rtaa.classification.common.v1.Prediction prediction = 12;
+};
+
+// Account
+message Account {
+    int64 followers = 1;
+    int64 following = 2;
+    int64 tweets = 3;
+    int64 favorites = 4;
+    int64 listed = 5;
+
+    bool default_profile = 6;
+    bool verified = 7;
+
+    google.protobuf.Timestamp created_at = 8;
+
+    string id = 10;
+
+    string user_name = 11;
+    string name = 12;
+
+    string profile_image_url = 13;
+    string profile_banner_url = 14;
+
+    string srource = 15;
+
+    proto.rtaa.classification.common.v1.Prediction prediction = 16;
+};
+
+message Media {
+    string id = 1;
+    string media_url_https = 2;
+    string display_url = 3;
+    string type = 4;
+};
+message Article {};
+
+// Relationship
+message Relationship {
+    string source = 1;
+    string target = 2;
+    string label = 3;
+};
+
+// StreamRequest
+message StreamRequest {
+    string id = 1;
+};
+
+// StreamResponse
+message StreamResponse {
+    repeated Tweet tweets = 1;
+    repeated Account accounts = 2;
+    repeated Media media = 3;
+    repeated Article articles = 4;
+    repeated Relationship relationships = 5;
+};
+
+message Empty {};
+
+// Autorization Related
+message AuthorizeRequest {};
+message ObbResponse {
+    string request_token = 1;
+    string url = 2;
+};
+message VerifyRequest {
+    string request_token = 1;
+    string oauth_verifier = 2;
+};
+message AuthResponse {
+    string id = 1;
+    string oauth_token = 2; 
+    string oauth_token_secret = 3;
+    string email = 4;
+    string user_name = 5;
+    bool verified = 6;
+    string profile_image_url_https = 7;
+    google.protobuf.Timestamp created_at = 8;
+};
+
+// Stream Related
+message ConnectRequest {
+    string id = 1;
+    string version = 2;
+
+    string track = 3;
+    string follow = 4;
+    
+    string oauth_token = 5; 
+    string oauth_token_secret = 6;
+    
+    bool classification_service_active = 7;
+    bool classification_service_classify_accounts = 8;
+    bool classification_service_classify_tweets = 9;
+    bool classification_service_classify_media = 10;
+    bool classification_service_classify_news = 11;
+    string classification_service_host = 12;
+
+    bool gephi_service_active = 13;
+    string gephi_service_host = 14;
+    string gephi_service_workspace = 15;
+};
+message ConnectResponse {
+    string status = 1;
+};
+message RulesRequest {
+    string id = 1;
+};
+message RulesResponse {};
+
+// TwitterWatchService Microservice
+service TwitterWatchService {
+    // Autorize implements twitter's oauth2 authorization
+    // read more: https://developer.twitter.com/en/docs/authentication/oauth-2-0
+    rpc Authorize(AuthorizeRequest) returns (AuthResponse) {
+        option (google.api.http) = {
+            post : "/v3/twitter/authorize"
+            body : "*"
+        };
+    }
+
+    // Obb implements twitter's pin-based oath 1.0a authorization
+    // read more: https://developer.twitter.com/en/docs/authentication/oauth-1-0a/pin-based-oauth
+    rpc Obb(Empty) returns (ObbResponse) {
+        option (google.api.http) = {
+            post : "/v3/twitterwatch/twitter/obb"
+            body : "*"
+        };
+    }
+
+    // Verify twitter's authorization
+    rpc Verify(VerifyRequest) returns (AuthResponse) {
+        option (google.api.http) = {
+            post : "/v3/twitterwatch/twitter/verify"
+            body : "*"
+        };
+    }
+
+    // Addrules adds a new rule to twitter streaming api
+    rpc AddRules(RulesRequest) returns (RulesResponse) {
+        option (google.api.http) = {
+            post : "/v3/twitterwatch/twitter/rules"
+            body : "*"
+        };
+    }
+
+    // GetRules returns all rules stored on twitter streaming api
+    rpc GetRules(RulesRequest) returns (RulesResponse) {
+        option (google.api.http) = {
+            get : "/v3/twitterwatch/twitter/rules"
+        };
+    }
+
+    // GetRule by id, specific to user id
+    rpc GetRule(RulesRequest) returns (RulesResponse) {
+        option (google.api.http) = {
+            get : "/v3/twitterwatch/twitter/rules/{id}"
+        };
+    }
+
+    // DeleteRules deletes all rules
+    rpc DeleteRules(RulesRequest) returns (RulesResponse) {
+        option (google.api.http) = {
+            delete : "/v3/twitterwatch/twitter/rules"
+            body : "*"
+        };
+    }
+
+    // DeleteRule deletes a specific rule
+    rpc DeleteRule(RulesRequest) returns (RulesResponse) {
+        option (google.api.http) = {
+            delete : "/v3/twitterwatch/twitter/rules/delete/{id}"
+        };
+    }
+
+    // Connect establish a connection with the service
+    rpc Connect(ConnectRequest) returns (ConnectResponse) {
+        option (google.api.http) = {
+            post : "/v3/twitterwatch/connect"
+            body : "*"
+        };
+    }
+
+    // Disconnect establish a connection with the service
+    rpc Disconnect(ConnectRequest) returns (ConnectResponse) {
+        option (google.api.http) = {
+            post : "/v3/twitterwatch/disconnect"
+            body : "*"
+        };
+    }
+
+    // Stream data from twitter api
+    rpc Stream(StreamRequest) returns (stream StreamResponse) {
+        option (google.api.http) = {
+            get : "/v3/twitterwatch/twitter/stream/{id}"
+        };
+    }
+};

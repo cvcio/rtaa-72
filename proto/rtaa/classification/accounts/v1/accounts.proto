@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package proto.rtaa.classification.accounts.v1;
+
+// third-party imports
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// rtaa-72 imports
+import "proto/rtaa/classification/common/v1/meta.proto";
+import "proto/rtaa/classification/common/v1/predictions.proto";
+
+message TwitterAccount {
+    int64 followers = 1;
+    int64 following = 2;
+    int64 tweets = 3;
+    int64 favorites = 4;
+    int64 listed = 5;
+
+    bool default_profile = 6;
+    bool verified = 7;
+
+    google.protobuf.Timestamp created_at = 8;
+
+    proto.rtaa.classification.common.v1.Meta meta = 9;
+}
+// TwitterAccountList, a list of TwitterAccount messages {accounts: [...]}
+message TwitterAccountList {
+    repeated TwitterAccount accounts = 1;
+}
+// ResponseAccount
+message ResponseAccount {
+    repeated proto.rtaa.classification.common.v1.Prediction predictions = 1;
+}
+// ResponseAccountList, a list of ResponseAccount messages {accounts: [...]}
+message ResponseAccountList {
+    repeated ResponseAccount accounts = 1;
+}
+
+// AccountService Microservice
+service AccountService {
+    // ClassifyTwitterAccount classifies a single TwitterAccount
+    // returns a ResponseAccount message
+    rpc ClassifyTwitterAccount (TwitterAccount) returns (ResponseAccount) {
+        option (google.api.http) = {
+            post : "/v1/classify/account/twitter"
+            body : "*"
+        };
+    };
+    // ClassifyTwitterAccount classifies a list of TwitterAccount messages (TwitterAccountList)
+    // returns a list of ResponseAccount messages (ResponseAccountList)
+    rpc ClassifyTwitterAccounts (TwitterAccountList) returns (ResponseAccountList) {
+        option (google.api.http) = {
+            post : "/v1/classify/accounts/twitter"
+            body : "*"
+        };
+    };
+};

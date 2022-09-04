@@ -1,0 +1,18 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/cvcio/rtaa-72/internal
+    except:
+      - buf.build/googleapis/googleapis
+      - buf.build/grpc-ecosystem/grpc-gateway
+      - buf.build/srikrsna/protoc-gen-gotag
+plugins:
+  - name: es
+    path: ./node_modules/.bin/protoc-gen-es
+    out: src/gen
+    opt: target=js
+  - name: connect-web
+    path: ./node_modules/.bin/protoc-gen-connect-web
+    out: src/gen
+    opt: target=js

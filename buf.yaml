@@ -1,0 +1,25 @@
+version: v1
+name: buf.build/cvcio/rtaa-72
+lint:
+  use:
+    - DEFAULT
+  rpc_allow_same_request_response: true
+  except:
+    # - PACKAGE_VERSION_SUFFIX
+    # - SERVICE_SUFFIX
+    # - PACKAGE_DIRECTORY_MATCH
+    - RPC_REQUEST_RESPONSE_UNIQUE
+    - RPC_REQUEST_STANDARD_NAME
+    - RPC_RESPONSE_STANDARD_NAME
+breaking:
+  use:
+    - FILE
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
+  - buf.build/srikrsna/protoc-gen-gotag
+build:
+  excludes:
+    - proto/cvcio/mediawatch
+    - proto/cvcio/ministry
+    - proto/third_party
